@@ -5,30 +5,41 @@ import java.util.Scanner;
 
 public class FashionArticles implements Article {
     private String name;
-    private String genre;
+    private int cost;
 
-    public void setInfo(String name,String genre) {
+    public FashionArticles() {
+        name = null;
+        cost= 0;
+    }
+
+    @Override
+    public void setName(String name) {
         this.name = name;
-        this.genre = genre;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setCost(int cost) {
+        this.cost=cost;
+    }
+
+    @Override
+    public int getCost() {
+        return cost;
     }
 
     @Override
     public void count_article() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshopping","root","123456");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshopping", "root", "123456");
             Statement statement = con.createStatement();
-            if (genre.equals("fashion")) {
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Articles ORDER BY published_at DESC " +
-                        "WHERE genre = 'fashion' OR genre = 'business'");
-                while (resultSet.next()) {
-                    System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " "
-                            + resultSet.getString(4) + " " + resultSet.getInt(5));
-                }
-                con.close();
-            }
-            if(name.equals(TypesOfArticle.ELLE)){
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Articles WHERE name='ELLE'");
+            if(name!=null){
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM Articles WHERE genre='fashion' OR genre ='business'");
                 while (resultSet.next()) {
                     System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " "
                             + resultSet.getString(4) + " " + resultSet.getInt(5));

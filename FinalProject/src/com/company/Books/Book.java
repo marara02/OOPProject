@@ -1,6 +1,11 @@
 package com.company.Books;
 
 public interface Book {
-    void read();
-    boolean hasAudioBook();
+    void setName(String name);
+    String  getName();
+    void setCost(int cost);
+    int getCost();
+    void CheckExist();
+    void CheckForCost();
+    void hasAudioBook();
 }

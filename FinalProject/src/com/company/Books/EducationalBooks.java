@@ -1,26 +1,117 @@
 package com.company.Books;
 
-public class EducationalBooks implements Book,HighSchoolProgramBooks,SecondarySchoolBooks {
+import java.sql.*;
+
+public class EducationalBooks extends Grade implements Book,HighSchoolProgramBooks {
     private int grade;
+    private int cost;
+    private String name;
     TypesOfBooks bookType;
 
-    public void SetEducationalBooks(int grade,TypesOfBooks bookType){
-        this.grade=grade;
-        this.bookType = bookType;
+    public EducationalBooks(){
+        super();
+        cost=0;
+        name=null;
     }
 
     @Override
-    public void read() {
-        System.out.println("For school auditory");
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     @Override
-    public boolean hasAudioBook() {
+    public int getGrade() {
+        return grade;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setCost(int cost) {
+       this.cost=cost;
+    }
+
+    @Override
+    public int getCost() {
+        return cost;
+    }
+
+    public void AllEduBooks(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshopping","root","123456");
+            Statement statement = con.createStatement();
+            if (grade!=0 && name!=null) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM educational WHERE grade='"+grade);
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt(1) + "|" + resultSet.getString(2) + "|" + resultSet.getInt(3) + "|"
+                            + resultSet.getInt(4) + "|" + resultSet.getString(5));
+                }
+                con.close();
+            }
+        } catch (NullPointerException | SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    @Override
+    public void CheckExist() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshopping","root","123456");
+            Statement statement = con.createStatement();
+            if (grade!=0 && name!=null) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM educational WHERE grade = '"+grade+"' AND name='"+name);
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " "
+                            + resultSet.getString(4) + " " + resultSet.getInt(5));
+                }
+                con.close();
+            }
+        } catch (NullPointerException | SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void CheckForCost() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshopping","root","123456");
+            Statement statement = con.createStatement();
+            if (cost >= 3000) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM educational WHERE cost >= 3000");
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " "
+                            + resultSet.getString(4) + " " + resultSet.getInt(5));
+                }
+                con.close();
+            }
+            if (cost < 3000) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM Literature WHERE cost < 3000");
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt(1) + ":" + resultSet.getString(2) + ":" + resultSet.getString(3) + ":"
+                            + resultSet.getString(4) + ":" + resultSet.getInt(5));
+                }
+                con.close();
+            }
+        } catch (NullPointerException | SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void hasAudioBook() {
         if(grade == 1 || grade == 2){
             System.out.println("Audio book required");
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -30,15 +121,5 @@ public class EducationalBooks implements Book,HighSchoolProgramBooks,SecondarySc
                System.out.println("Online books");
            }
        }
-    }
-
-    @Override
-    public boolean isFree() {
-        if(grade == 1){
-            if(bookType == TypesOfBooks.Math_copybook || bookType ==TypesOfBooks.English){
-                return true;
-            }
-        }
-        return false;
     }
 }
