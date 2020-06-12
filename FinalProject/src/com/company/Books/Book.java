@@ -5,7 +5,6 @@ public interface Book {
     String  getName();
     void setCost(int cost);
     int getCost();
-    void CheckExist();
-    void CheckForCost();
+    boolean CheckExist();
     void hasAudioBook();
 }

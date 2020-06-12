@@ -22,13 +22,6 @@ public class DatabaseToCatalog {
                 System.out.println(resultSet2.getInt(1) + "|" + resultSet2.getString(2) + "|" + resultSet2.getString(3) + "|"
                         + resultSet2.getString(4) + "|" + resultSet2.getInt(5));
             }
-            System.out.println("Articles with variety of theme");
-            ResultSet resultSet3 = statement.executeQuery("SELECT * FROM articles");
-            while (resultSet3.next()) {
-                System.out.println(resultSet3.getInt(1) + "|" + resultSet3.getString(2) + "|" + resultSet3.getInt(3) + "|"
-                        + resultSet3.getDate(4) + "|" + resultSet3.getInt(5));
-            }
-            con.close();
         }
     catch (NullPointerException | SQLException | ClassNotFoundException e) {
         System.err.println(e.getMessage());
