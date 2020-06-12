@@ -3,8 +3,7 @@ package Workers;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.Scanner;
+
 
 //import  com.company.Books;
 
@@ -26,40 +25,18 @@ public class Manager extends Worker{
 		return true;
 	}
 	
-	public void AddBook() {
-		System.out.println("Please Choose the purpose of the book:");
-		System.out.println("1.Literature");
-		System.out.println("2.Education");
-		Scanner book = new Scanner(System.in);
-		 int purpose =book.nextInt();
-		 switch (purpose) {
-		 case 1:
-	           
-		/* Statement statement = connection.createStatement();
-		 statement.executeUpdate("INSERT INTO literature (id,book_name,author,genre,cost)" + 
-		            "VALUES (?,?,?,?,?)");
-	          */  
-	            System.out.println("Enter the id of the new book ");
-	            int id=book.nextInt();
-	            System.out.println("Enter the name of the new book ");
-	            String book_name =book.nextLine(); 
-	            System.out.print("Enter the author of the new book ");
-	            String author=book.nextLine();
-	            System.out.println("Enter the genre of the new book ");
-	            String genre=book.nextLine();
-	            System.out.print("Enter the cost of the new book ");
-	            int cost =book.nextInt();
-	            
+	public Boolean  AddLiteratureBook(int id,String book_name, String author, String genre, int cost ) {
+		
 	            try
 	            {
 	              // create a mysql database connection
-	            	String myDriver = "org.gjt.mm.mysql.Driver";
-	              String myUrl = "jdbc:mysql:localhost:3306/final project";
+	            	String myDriver = "com.mysql.jdbc.Driver";
+	              String url = "jdbc:mysql:localhost:3306/final project";
 	           
 	              Class.forName(myDriver);
-	              Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
+	              Connection conn = DriverManager.getConnection(url, "zhanel", "1234");
 	              
-	              Statement st = conn.createStatement();
+	           
 
 	              // the mysql insert statement
 	              String query = ("INSERT INTO literature (id,book_name,author,genre,cost)" + 
@@ -72,41 +49,30 @@ public class Manager extends Worker{
 		            preparedStmt.setString  (3, author);
 		            preparedStmt.setString (4, genre);
 		            preparedStmt.setInt    (5, cost);
-		            System.out.println("Inserted book:"+book);
 
 	              // execute the preparedstatement
-	              preparedStmt.execute();
+		            preparedStmt.executeUpdate();
+		            conn.close();
 	              
-	              conn.close();
 	            }
 	            catch (Exception e)
 	            {
-	              System.err.println("Got an exception!");
+	             
 	              System.err.println(e.getMessage());
 	            }
-		 case 2:
-			 
-			 System.out.println("Enter the id of the new book ");
-	            int id2=book.nextInt();
-	            System.out.println("Enter the subject of the new book ");
-	            String subject =book.nextLine(); 
-	            System.out.print("Enter the grade  of the new book ");
-	            String grade=book.nextLine();
-	            
-	            System.out.print("Enter the cost of the new book ");
-	            int cost2 =book.nextInt();
-	            System.out.println("Enter the author of the new book ");
-	            String author2=book.nextLine();
+	            return false;
+	}
+		 public Boolean AddEducationalBook(int id2,String subject, String grade, int cost2,String author2) {
 	            try
 	            {
 	              // create a mysql database connection
-	            	String myDriver = "org.gjt.mm.mysql.Driver";
-	              String myUrl = "jdbc:mysql:localhost:3306/final project";
+	            	String myDriver = "com.mysql.jdbc.Driver";
+	              String url = "jdbc:mysql:localhost:3306/final project";
 	           
 	              Class.forName(myDriver);
-	              Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
+	              Connection conn = DriverManager.getConnection(url, "zhanel", "1234");
 	              
-	              Statement st = conn.createStatement();
+	             
 
 	              // the mysql insert statement
 	              String query = ("INSERT INTO educational (id,subject,grade,cost,author)" + 
@@ -119,44 +85,35 @@ public class Manager extends Worker{
 		            preparedStmt.setString  (3, grade);
 		            preparedStmt.setInt (4, cost2);
 		            preparedStmt.setString    (5, author2);
-		            System.out.println("Inserted book:"+book);
+		        
 
 	              // execute the preparedstatement
-	              preparedStmt.execute();
-	              
-	              conn.close();
+		            preparedStmt.executeUpdate();
+		            conn.close();
+	            
 	            }
 	            catch (Exception e)
 	            {
-	              System.err.println("Got an exception!");
+	             
 	              System.err.println(e.getMessage());
 	            }
+	            return false;
 	          }
-	}
-	public void  AddArticle()
+	
+	public Boolean AddArticle(int id,String article_name,String genre,String published_at,int cost)
 	{
-		 Scanner article = new Scanner(System.in);
-         System.out.println("Enter the id of the new article ");
-         int id=article.nextInt();
-         System.out.println("Enter the name of the new article ");
-         String article_name =article.nextLine(); 
-         System.out.print("Enter the author of the new article ");
-         String genre=article.nextLine();
-         System.out.println("Enter the genre of the new article ");
-         String published_at=article.nextLine();
-         System.out.print("Enter the cost of the new article ");
-         int cost =article.nextInt();
+		
          
          try
          {
            // create a mysql database connection
-         	String myDriver = "org.gjt.mm.mysql.Driver";
+         	String myDriver = "com.mysql.jdbc.Driver";
            String myUrl = "jdbc:mysql:localhost:3306/final project";
         
            Class.forName(myDriver);
            Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
            
-           Statement st = conn.createStatement();
+      
 
            // the mysql insert statement
            String query = ("INSERT INTO article (id,article_name,genre,published_at,cost)" + 
@@ -169,23 +126,21 @@ public class Manager extends Worker{
 	            preparedStmt.setString  (3, genre);
 	            preparedStmt.setString (4, published_at);
 	            preparedStmt.setInt    (5, cost);
-	            System.out.println("Inserted book:"+article);
 
            // execute the preparedstatement
-           preparedStmt.execute();
-           
+           preparedStmt.executeUpdate();
            conn.close();
          }
          catch (Exception e)
          {
-           System.err.println("Got an exception!");
            System.err.println(e.getMessage());
          }
+         return false;
        }
 	@Override
 	public String toString () {
 		return "Manager's personal information:{"
-				+ Name +" " + Surname+", salary:"+salary+"}";
+				+ Name +" " + Surname+", salary:"+GetSalary()+"}";
 	}
 	}	            
 

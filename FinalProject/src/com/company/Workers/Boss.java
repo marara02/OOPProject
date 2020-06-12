@@ -1,14 +1,9 @@
 package Workers;
 
 public class Boss extends Worker {
-	private String n="Assem";//There should be only one Boss, the name and surname  
-	private String sn="Assemova"; 
-	
-	
-	public Boss(String n,String sn) {
-		super(n,sn);
-		//this.n="Assem";
-		//this.sn="Assemova";
+	public Boss(String name,String surname) {
+		super(name,surname);
+		
 		
 	}
 
@@ -25,7 +20,7 @@ public class Boss extends Worker {
 	@Override
 	public String toString () {
 		return "The personal information of the Boss :{"
-				+ Name +" " + Surname+", salary:"+salary+"}";
+				+ Name +" " + Surname+", salary:"+GetSalary()+"}";
 	}
 	
 

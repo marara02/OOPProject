@@ -33,12 +33,12 @@ public class Seller extends Manager {
 		}
 		
 	}
-	public void SaleBook(String book_name) {
+	public Boolean SaleBook(String book_name) {
 
 		    try
 		    {
 		 
-		      String myDriver = "org.gjt.mm.mysql.Driver";
+		      String myDriver = "com.mysql.jdbc.Driver";
 		      String myUrl = "jdbc:mysql:localhost:3306/final project";
 		      Class.forName(myDriver);
 		      Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
@@ -49,24 +49,24 @@ public class Seller extends Manager {
 		      PreparedStatement preparedStmt = conn.prepareStatement(query);
 		      preparedStmt.setString (1, book_name);
 
-		      preparedStmt.execute();
-		      
-		      conn.close();
+		      preparedStmt.executeUpdate();
+	           conn.close();
 		    }
 		    catch (Exception e)
 		    {
-		      System.err.println("Got an exception! ");
+		     
 		      System.err.println(e.getMessage());
 		    }
+		    return false;
 
 		  }
 		
 	
-	public void SaleArticle (String article_name) {
+	public Boolean SaleArticle (String article_name) {
 		  try
 		    {
 		 
-		      String myDriver = "org.gjt.mm.mysql.Driver";
+		      String myDriver = "com.mysql.jdbc.Driver";
 		      String myUrl = "jdbc:mysql:localhost:3306/final project";
 		      Class.forName(myDriver);
 		      Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
@@ -77,21 +77,23 @@ public class Seller extends Manager {
 		      PreparedStatement preparedStmt = conn.prepareStatement(query);
 		      preparedStmt.setString (1, article_name);
 
-		      preparedStmt.execute();
+		      preparedStmt.executeUpdate();
+	           conn.close();
 		      
-		      conn.close();
+		
 		    }
 		    catch (Exception e)
 		    {
-		      System.err.println("Got an exception! ");
+		 
 		      System.err.println(e.getMessage());
 		    }
+		  return false;
 
 	}
 	@Override
 	public String toString () {
 		return "Seller's personal information:{"
-				+ Name +" " + Surname+", salary:"+salary+"}";
+				+ Name +" " + Surname+", salary:"+GetSalary()+"}";
 	}
 	
 	

@@ -25,7 +25,7 @@ public abstract class Worker {//It is an abstract class, because i needed an con
 	
 	public String toString () {
 		return "Worker's personal information:{"
-				+ Name +" " + Surname+", salary:"+salary+"}";
+				+ Name +" " + Surname+", salary:"+GetSalary()+"}";
 	}
 
 }
