@@ -1,63 +1,99 @@
-package com.company.Workers;
+package Workers;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class Seller extends Manager {
-
     public int worktime;//in month
+	public Seller(String n, String sn,int worktime) {
+		super(n, sn);
+		this.worktime=worktime;
+		// TODO Auto-generated constructor stub
+	}
+	@Override 
+	public int GetSalary() {
+		return 100000;
+		
+	}
+	
+	public void SetWorktime(int worktime) {
+		this.worktime=worktime;
+	}
+	public int GetWotktime() {
+		return worktime;
+	}
+	@Override 
+	public Boolean GetVacation () {
+		if (worktime>3) {
+			return true;
+		}
+		else {
+		return false;	
+		}
+		
+	}
+	public void SaleBook(String book_name) {
 
-    public Seller(String n, String sn,int worktime) {
+		    try
+		    {
+		 
+		      String myDriver = "org.gjt.mm.mysql.Driver";
+		      String myUrl = "jdbc:mysql:localhost:3306/final project";
+		      Class.forName(myDriver);
+		      Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
+		      
+		     
+		   
+		      String query = "DELETE FROM  users WHERE book_name= ?";
+		      PreparedStatement preparedStmt = conn.prepareStatement(query);
+		      preparedStmt.setString (1, book_name);
 
-        super(n, sn);
+		      preparedStmt.execute();
+		      
+		      conn.close();
+		    }
+		    catch (Exception e)
+		    {
+		      System.err.println("Got an exception! ");
+		      System.err.println(e.getMessage());
+		    }
 
-        this.worktime=worktime;
+		  }
+		
+	
+	public void SaleArticle (String article_name) {
+		  try
+		    {
+		 
+		      String myDriver = "org.gjt.mm.mysql.Driver";
+		      String myUrl = "jdbc:mysql:localhost:3306/final project";
+		      Class.forName(myDriver);
+		      Connection conn = DriverManager.getConnection(myUrl, "zhanel", "1234");
+		      
+		     
+		   
+		      String query = "DELETE FROM  users WHERE book_name= ?";
+		      PreparedStatement preparedStmt = conn.prepareStatement(query);
+		      preparedStmt.setString (1, article_name);
 
-        // TODO Auto-generated constructor stub
+		      preparedStmt.execute();
+		      
+		      conn.close();
+		    }
+		    catch (Exception e)
+		    {
+		      System.err.println("Got an exception! ");
+		      System.err.println(e.getMessage());
+		    }
 
-    }
+	}
+	@Override
+	public String toString () {
+		return "Seller's personal information:{"
+				+ Name +" " + Surname+", salary:"+salary+"}";
+	}
+	
+	
 
-    @Override
-
-    public int GetSalary() {
-
-        return 100000;
-
-
-
-    }
-
-
-
-    public void SetWorktime(int worktime) {
-
-        this.worktime=worktime;
-
-    }
-
-    public int GetWotktime() {
-
-        return worktime;
-
-    }
-
-    @Override
-
-    public Boolean GetVacation () {
-        if (worktime>3) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public Boolean SaleBook() {
-
-        //there should be some code with a link to the library
-        return true ;
-    }
-
-    public Boolean  ReturnBook() {
-        //some code
-        return true;
-    }
 }
